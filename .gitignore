@@ -1,0 +1,5 @@
+KG_figures/
+*.png
+*.mp4
+__pycache__/
+*.swp
