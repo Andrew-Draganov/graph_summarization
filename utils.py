@@ -11,5 +11,3 @@ def symmetrize(mat, n):
     i_upper = np.triu_indices(n, -1)
     mat[i_upper] = mat.T[i_upper]
     return mat
-
-# def determine_subgraph(walkers, adj_mat, edge_types, K):

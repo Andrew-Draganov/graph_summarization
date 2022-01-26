@@ -41,6 +41,20 @@ class Relation:
         self.get_total_walks()
 
 class KGSummarizer:
+    """
+    Code to make a simulated knowledge graph and summarize the queried information
+    by applying random walkers to capture information convergence likelihoods
+        - The knowledge graph receives queries at every time-step on a random node
+        - Random walkers are spawned each time a 'query' is made and each represents
+          one sub-unit of relevance for the query
+        - At every time-step, each walker takes a step along a random edge
+          and a random set of c walkers is removed
+        - The queries are summarized by the nodes with the highest walker densities
+        - If a node with high degree has been queried, we are likely to have
+          a large collection of walkers remain on the node or in its vicinity
+            - If, instead, a node with small degree is queried, the walkers will
+              converge to neighboring nodes with high degree
+    """
     def __init__(
         self,
         n=50,
@@ -147,7 +161,6 @@ class KGSummarizer:
 
     def remove_walkers(self):
         w = len(self.walkers)
-        print(w, self.c)
         keep_indices = np.random.choice(np.arange(w), w - self.c, replace=False)
         remove_indices = np.array([i for i in range(w) if i not in keep_indices])
         for i in remove_indices:
